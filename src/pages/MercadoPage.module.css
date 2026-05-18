@@ -1,114 +1,229 @@
+/* ============================
+   MercadoPage — Premium Mobile-First
+   ============================ */
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ========== HERO BAR ========== */
+.heroBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 100%);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.heroMain {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.heroDivider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.heroLabel {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.55);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.heroPrice {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #c9a84c;
+  line-height: 1;
+}
+
+.heroValue {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  line-height: 1;
+}
+
+.heroUp {
+  color: #34d399;
+}
+
+.heroDown {
+  color: #f87171;
+}
+
+/* ========== STATS GRID ========== */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-@media (max-width: 1024px) {
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .statCard {
   background: white;
-  padding: 20px;
-  border-radius: var(--border-radius-card);
-  box-shadow: var(--shadow-premium);
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
+  gap: 2px;
+  border: 1px solid #f0f0f0;
 }
 
-.statCard label {
-  font-size: 0.75rem;
+.statLabel {
+  font-size: 0.6rem;
   color: var(--text-secondary);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  letter-spacing: 0.4px;
 }
 
 .statVal {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 800;
   color: var(--primary-color);
+  line-height: 1.2;
 }
 
 .statSub {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  margin-top: 4px;
+  font-size: 0.65rem;
+  color: #9ca3af;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.chartContainer {
-  margin-top: 20px;
-}
-
-.chartTooltip {
+/* ========== CHART ========== */
+.chartCard {
   background: white;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+  margin-bottom: 16px;
 }
 
-.tooltipTitle {
+.sectionTitle {
+  font-size: 0.95rem;
   font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 4px;
+  color: var(--primary-color);
+  margin: 0 0 10px 0;
 }
 
-.tooltipValue {
-  font-size: 0.85rem;
-  color: var(--primary-color);
+.chartContainer {
+  margin: 0 -8px;
+}
+
+.refDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px 0 4px;
+  padding: 0 8px;
+}
+
+.refDivider::before,
+.refDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.refDivider span {
+  font-size: 0.6rem;
+  color: #9ca3af;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.chartLegend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.65rem;
+  color: #6b7280;
+  font-weight: 600;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+  margin-top: 8px;
+}
+
+.legendDot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.legendLine {
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: #ef4444;
+  margin-left: 12px;
+  margin-right: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+}
+
+/* ========== TABLE ========== */
+.tableCard {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
 }
 
 .tableHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .infoNote {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-size: 0.7rem;
+  color: #9ca3af;
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-top: 4px;
-}
-
-.addBtn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: var(--border-radius-btn);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin-top: 2px;
 }
 
 .compName {
   font-weight: 600;
   color: var(--text-main);
+  font-size: 0.82rem;
 }
 
 .compRef {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-size: 0.7rem;
+  color: #9ca3af;
 }
 
 .bold {
@@ -117,140 +232,279 @@
 
 .linkIcon {
   color: var(--primary-color);
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
+.linkIcon:hover {
+  opacity: 1;
 }
 
-.actionBtn {
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  padding: 4px;
-  border-radius: 4px;
+/* Row states */
+.rowOwn {
+  background-color: #fef9ef !important;
+  border-left: 3px solid #c9a84c;
 }
 
-.actionBtn:hover {
-  background: #f3f4f6;
+.rowOwn td {
   color: var(--primary-color);
 }
 
-.rowGreen {
-  background-color: #f0fdf4 !important;
-}
-
-.rowYellow {
-  background-color: #fefce8 !important;
-}
-
 .rowInactive {
-  opacity: 0.6;
-  background-color: #f9fafb !important;
+  opacity: 0.5;
 }
 
 .oldPrice {
   text-decoration: line-through;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
+  color: #9ca3af;
+  font-size: 0.78rem;
   font-weight: 400;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
-.statusBadge {
-  font-size: 0.65rem;
-  padding: 2px 6px;
+.badge {
+  display: inline-block;
+  font-size: 0.55rem;
+  padding: 2px 5px;
   border-radius: 4px;
   font-weight: 700;
   text-transform: uppercase;
-  margin-left: 8px;
+  margin-left: 5px;
   vertical-align: middle;
-}
-
-.statusSold {
-  background-color: #fee2e2;
+  white-space: nowrap;
+  background: #fee2e2;
   color: #ef4444;
   border: 1px solid #fecaca;
 }
 
-/* Modal */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  padding: 20px;
+/* ========== MOBILE CARDS ========== */
+.mobileCards {
+  display: block;
 }
 
-.modal {
+.desktopTable {
+  display: none;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
   background: white;
-  padding: 32px;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
+  transition: box-shadow 0.2s;
 }
 
-.formGrid {
+.card:active {
+  box-shadow: 0 0 0 2px rgba(30,58,95,0.1);
+}
+
+.cardDim {
+  opacity: 0.5;
+}
+
+.cardOwn {
+  border-color: #c9a84c;
+  background: linear-gradient(135deg, #fef9ef 0%, #fffdf7 100%);
+  box-shadow: 0 2px 8px rgba(201,168,76,0.12);
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cardBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.cardBadgeOwn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 8px;
+  background: #c9a84c;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.cardBadgeInactive {
+  background: #9ca3af;
+}
+
+.cardInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardName {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  display: block;
+  line-height: 1.25;
+}
+
+.cardAddr {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  display: block;
+  margin-top: 1px;
+}
+
+.cardExtLink {
+  color: var(--primary-color);
+  opacity: 0.6;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.cardGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 24px;
+  gap: 8px 14px;
 }
 
-@media (max-width: 480px) {
-  .formGrid {
-    grid-template-columns: 1fr;
+.cardMetric {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricLabel {
+  font-size: 0.55rem;
+  color: #9ca3af;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.metricVal {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.metricHighlight {
+  color: var(--primary-color);
+  font-weight: 800;
+}
+
+.cardFooter {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 0.65rem;
+  color: #9ca3af;
+  line-height: 1.3;
+}
+
+/* ==================== DESKTOP ==================== */
+@media (min-width: 769px) {
+  .heroBar {
+    padding: 20px 32px;
+  }
+
+  .heroPrice {
+    font-size: 1.6rem;
+  }
+
+  .heroValue {
+    font-size: 1.1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .statCard {
+    padding: 18px;
+  }
+
+  .statVal {
+    font-size: 1.35rem;
+  }
+
+  .chartCard,
+  .tableCard {
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .sectionTitle {
+    font-size: 1.05rem;
+  }
+
+  .mobileCards {
+    display: none;
+  }
+
+  .desktopTable {
+    display: block;
   }
 }
 
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+/* ==================== SMALL MOBILE ==================== */
+@media (max-width: 380px) {
+  .heroBar {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
 
-.formGroup label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
+  .heroPrice {
+    font-size: 1.1rem;
+  }
 
-.formGroup input {
-  padding: 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-family: inherit;
-}
+  .heroValue {
+    font-size: 0.8rem;
+  }
 
-.modalActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 32px;
-}
+  .statsGrid {
+    gap: 6px;
+  }
 
-.cancelBtn {
-  background: #f3f4f6;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-}
+  .statCard {
+    padding: 10px;
+  }
 
-.saveBtn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 10px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  .statVal {
+    font-size: 1rem;
+  }
+
+  .chartCard,
+  .tableCard {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .card {
+    padding: 10px 12px;
+  }
+
+  .cardGrid {
+    gap: 6px 10px;
+  }
+
+  .metricVal {
+    font-size: 0.8rem;
+  }
 }

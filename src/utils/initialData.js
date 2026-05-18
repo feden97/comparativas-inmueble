@@ -1,4 +1,4 @@
-export const DATA_VERSION = 2;
+export const DATA_VERSION = 9;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -38,6 +38,7 @@ export const initialInmuebleData = {
 };
 
 export const initialComparables = [
+  // === VENDIDAS / DESLISTADAS (se muestran como X) ===
   {
     id: 1,
     nombre: "Casa Asoc. Fortunato Zora Carbajal",
@@ -57,7 +58,7 @@ export const initialComparables = [
     coordenadas: { lat: -18.0345, lng: -70.2520 },
     fechaPublicacion: "2025-12",
     activa: false,
-    estado: "Deslistada o Vendida"
+    estado: "Vendida o Deslistada"
   },
   {
     id: 2,
@@ -79,11 +80,32 @@ export const initialComparables = [
     coordenadas: { lat: -18.0330, lng: -70.2495 },
     fechaPublicacion: "2025-12",
     activa: false,
-    estado: "Deslistada o Vendida"
+    estado: "Vendida o Deslistada"
+  },
+  // === PUBLICACIONES ACTIVAS (numeradas 1-4 según imagen) ===
+  {
+    id: 7,
+    nombre: "Casa de 3 pisos Esquina",
+    referencia: "A 1 cuadra de Av. La Cultura, cerca Parque del Niño y Mercado Santa Rosa",
+    precio: 170000,
+    areaTerrenoM2: 120,
+    areaConstruidaM2: 247,
+    pisos: 3,
+    habitaciones: 5,
+    banios: 5,
+    medioBanio: 0,
+    cocheras: 1,
+    descripcion: "Casa de 3 pisos con excelente ubicación. 120 m² terreno, +247 m² construidos. Cochera, terraza, zona de lavandería.",
+    usoIdeal: "Vivienda familiar o inversión",
+    fuente: "Properati",
+    link: "https://www.properati.com.pe/detalle/14032-32-b270-c395df8feaf6-19d874a-ba66-7128",
+    coordenadas: { lat: -18.043389, lng: -70.254806 },
+    fechaPublicacion: "2026-05-01",
+    activa: true
   },
   {
     id: 4,
-    nombre: "Casa 3 pisos en esquina — Alfonso Ugarte II",
+    nombre: "Casa Alfonso Ugarte (Bajó -5000 USD)",
     referencia: "Conj. Hab. Alfonso Ugarte II Etapa, frente Plaza La Floresta, cerca Plaza Pérez Gamboa",
     precio: 140000,
     precioAnterior: 145000,
@@ -97,50 +119,95 @@ export const initialComparables = [
     descripcion: "Casa de 3 pisos en esquina. Sin cargas ni gravámenes, título de propiedad, partida registral independiente. Ambiente para tienda con puerta enrollable, garaje, patio lavandería. A 2 cuadras Av. Municipal y Av. Antúnez de Mayolo.",
     usoIdeal: "Vivienda familiar, proyecto comercial o desarrollo de departamentos",
     fuente: "Propietarios Perú",
-    link: "https://ubicasa.pe/inmuebles/casa-venta-coronel-gregorio-albarrac%C3%ADn-lanchipa-oscar-rueda-283.48m2-6-dormitorios-613cea69",
+    link: "https://www.properati.com.pe/detalle/14032-32-fc53-caffdc550b1b-1978de7-8ace-7df6",
     coordenadas: { lat: -18.0391775, lng: -70.2482739 },
     fechaPublicacion: "2026-04-30",
     activa: true
   },
   {
-    id: 7,
-    nombre: "Casa 3 pisos en esquina — Properati",
-    referencia: "Gregorio Albarracín, Tacna (Properati)",
-    precio: 170000,
-    areaTerrenoM2: 120,
-    areaConstruidaM2: 247,
-    pisos: 3,
-    habitaciones: null,
-    banios: null,
-    medioBanio: null,
-    cocheras: null,
-    descripcion: "Casa de 3 pisos en esquina. Excelente ubicación. Información obtenida de Properati.",
-    usoIdeal: "Vivienda familiar o inversión",
-    fuente: "Properati",
-    link: "https://www.properati.com.pe/detalle/14032-32-b270-c395df8feaf6-19d874a-ba66-7128",
-    coordenadas: { lat: -18.043389, lng: -70.254806 },
-    fechaPublicacion: "2026-05-01",
-    activa: true
-  },
-  {
     id: 8,
-    nombre: "Inmueble Avenida 4 pisos — Viñani",
+    nombre: "Inmueble Avenida 4 pisos VIÑANI",
     referencia: "Viñani, Gregorio Albarracín (Properati)",
     precio: 265000,
     areaTerrenoM2: 120,
     areaConstruidaM2: 480,
     pisos: 4,
-    habitaciones: null,
-    banios: null,
-    medioBanio: null,
-    cocheras: null,
-    descripcion: "Inmueble de 4 pisos ubicado en avenida en la zona de Viñani. Gran potencial comercial.",
+    habitaciones: 9,
+    banios: 6,
+    medioBanio: 0,
+    cocheras: 0,
+    descripcion: "Propiedad diseñada para vivir y alquilar. Local comercial 110 m² + 4 departamentos independientes + espacio adicional en 4to piso.",
     usoIdeal: "Inversión comercial o renta",
     fuente: "Properati",
-    link: "https://www.properati.com.pe/detalle/14032-32-93e3-550df7eff8b0-1954d24-955a-7ac5",
-    coordenadas: { lat: -18.0726724, lng: -70.2638477 },
+    link: "https://www.properati.com.pe/detalle/14032-32-fade-8c14351f65e-193c0a3-8eeb-724c",
+    coordenadas: { lat: -18.0744267, lng: -70.2631459 },
     fechaPublicacion: "2026-05-01",
     activa: true
+  },
+  {
+    id: 9,
+    nombre: "Casa a 1/2 cuadra Av. Simon Bolivar",
+    referencia: "Cerca colegio Pallardelli y mercado Santa Rosa",
+    precio: 135000,
+    areaTerrenoM2: 140,
+    areaConstruidaM2: 312,
+    pisos: 3,
+    habitaciones: 5,
+    banios: 3,
+    medioBanio: 0,
+    cocheras: 1,
+    descripcion: "Construcción de 3 pisos, 2 cocinas, cochera amplia, 2 lavanderías, azotea/terraza.",
+    usoIdeal: "Vivienda familiar",
+    fuente: "Properati",
+    link: "https://www.properati.com.pe/detalle/14032-32-8c6-869166d66f95-19df4ff-b06c-7478",
+    coordenadas: { lat: -18.048343, lng: -70.2517848 },
+    fechaPublicacion: "2026-05-12",
+    activa: true
+  },
+  // === REFERENCIAS (sin coordenadas, excluidas del mapa y promedios) ===
+  {
+    id: 10,
+    nombre: "Local Comercial Av. La Cultura",
+    referencia: "A media cuadra del Mercado Santa Rosa",
+    precio: 325000,
+    areaTerrenoM2: 121.48,
+    areaConstruidaM2: 218,
+    pisos: 2,
+    habitaciones: 0,
+    banios: 0,
+    medioBanio: 0,
+    cocheras: 0,
+    descripcion: "Propiedad comercial en zona de alto tránsito peatonal y vehicular, ideal para negocio, inversión o desarrollo comercial.",
+    usoIdeal: "Tienda comercial, consultorios, oficinas, proyecto de renta",
+    fuente: "Ubicasa",
+    link: "https://ubicasa.pe/inmuebles/local-comercial-venta-coronel-gregorio-albarrac%C3%ADn-lanchipa--218.0m2-0-dormitorios-c42ded61",
+    coordenadas: { lat: -18.043608, lng: -70.256217 },
+    fechaPublicacion: "2026-05-12",
+    activa: false,
+    estado: "Referencia",
+    notas: "Solo referencia, distorsiona el precio promedio por ser comercial"
+  },
+  {
+    id: 11,
+    nombre: "Casa Av. Humboldt (Referencia)",
+    referencia: "A solo una cuadra de la Av. Humboldt",
+    precio: 170000,
+    areaTerrenoM2: 160,
+    areaConstruidaM2: null,
+    pisos: 3,
+    habitaciones: 7,
+    banios: 4,
+    medioBanio: 1,
+    cocheras: 1,
+    descripcion: "Primer nivel: Sala, comedor, local comercial. Segundo: 2 Dptos. Tercer: Lavandería, listos para construir hasta 4 pisos.",
+    usoIdeal: "Vivienda multifamiliar o negocio",
+    fuente: "Properati",
+    link: "https://www.properati.com.pe/detalle/14032-32-93e3-550df7eff8b0-1954d24-955a-7ac5",
+    coordenadas: null,
+    fechaPublicacion: "2025-02-28",
+    activa: false,
+    estado: "Referencia",
+    notas: "Solo referencia, sin precio por m2 por falta de área construida exacta"
   }
 ];
 

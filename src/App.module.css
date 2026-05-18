@@ -9,46 +9,27 @@
   background-color: var(--primary-color);
   color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 24px;
   position: sticky;
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  gap: 12px;
 }
 
-.headerLeft h1 {
-  font-size: 1.2rem;
+.header h1 {
+  font-size: 1.1rem;
   color: white;
   margin: 0;
+  white-space: nowrap;
 }
 
-.headerRight {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.headerSub {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
 }
-
-.headerPrice {
-  color: var(--secondary-color);
-  font-weight: 700;
-  font-size: 1.2rem;
-}
-
-.statusSelect {
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: none;
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  outline: none;
-}
-
-.statusActive { background: #dcfce7; color: #166534; }
-.statusNeg { background: #fef9c3; color: #854d0e; }
-.statusSold { background: #f3f4f6; color: #374151; }
 
 .mainWrapper {
   display: flex;
@@ -63,13 +44,13 @@
   position: fixed;
   top: var(--header-height);
   bottom: 0;
-  display: none; /* Mobile first */
+  display: none; /* Mobile first — hidden */
 }
 
 .content {
   flex: 1;
-  padding: 24px;
-  padding-bottom: calc(var(--tab-bar-height) + 24px); /* Space for tab bar */
+  padding: 16px;
+  padding-bottom: calc(var(--tab-bar-height) + 16px);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -107,13 +88,13 @@
   font-weight: 600;
 }
 
-/* Tab Bar */
+/* Tab Bar — Mobile navigation */
 .tabBarWrapper {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: block;
 }
 
@@ -124,53 +105,44 @@
   justify-content: space-around;
   align-items: center;
   border-top: 1px solid #e5e7eb;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 .tabLink {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   color: var(--text-secondary);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 500;
   background: none;
   border: none;
+  flex: 1;
+  height: 100%;
+  text-decoration: none;
+  transition: var(--transition-smooth);
 }
 
 .tabActive {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   color: var(--primary-color);
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex: 1;
+  height: 100%;
+  border-top: 3px solid var(--primary-color);
+  background: #f0f5ff;
+  text-decoration: none;
 }
 
-.moreMenu {
-  position: absolute;
-  bottom: calc(var(--tab-bar-height) + 10px);
-  right: 10px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 150px;
-}
-
-.moreMenu .tabLink {
-  padding: 12px 20px;
-  flex-direction: row;
-  gap: 12px;
-  font-size: 0.9rem;
-  width: 100%;
-  justify-content: flex-start;
-}
-
+/* ==================== DESKTOP ==================== */
 @media (min-width: 769px) {
   .sidebar {
     display: block;
@@ -180,9 +152,23 @@
   }
   .content {
     margin-left: var(--sidebar-width);
+    padding: 24px;
     padding-bottom: 24px;
   }
+  .header h1 {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==================== SMALL MOBILE ==================== */
+@media (max-width: 380px) {
   .header {
-    padding-left: 24px;
+    padding: 0 12px;
+  }
+  .header h1 {
+    font-size: 0.95rem;
+  }
+  .headerSub {
+    display: none;
   }
 }
