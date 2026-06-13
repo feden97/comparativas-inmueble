@@ -1,4 +1,4 @@
-export const DATA_VERSION = 9;
+export const DATA_VERSION = 11;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -7,12 +7,12 @@ export const initialInmuebleData = {
   ciudad: "Tacna, Perú",
   coordenadas: { lat: -18.037808, lng: -70.256515 },
   areaTerrenoM2: 120.5,
-  areaConstruidaM2: 387.10,
+  areaConstruidaM2: 384,
   pisos: 4,
   habitaciones: 16,
   banios: 8,
   localComercialM2: 75,
-  precioPublicacion: 230000,
+  precioPublicacion: 220000,
   precioNotaAclaratoria: "En revisión según nuevas publicaciones del mercado (análisis: Dic 2025)",
   estadoVenta: "Activo",
   descripcionGeneral: "Inmueble de 4 pisos con estructura antisísmica y planos de arquitectura e ingeniería. Ideal para hotel, clínica, oficinas, academia o renta. Trato directo con propietario, sin comisiones inmobiliarias. Documentación en regla, inscrito en SUNARP, único dueño.",
@@ -30,7 +30,7 @@ export const initialInmuebleData = {
     { id: 1, piso: "1er Piso", areaConstruida: 106.80, descripcion: "Local comercial 75 m² (ideal restaurante, gimnasio, farmacia) + 1 habitación + 1 baño completo + medio baño + patio interior/lavandería" },
     { id: 2, piso: "2do Piso", areaConstruida: 108.10, descripcion: "6 habitaciones simples + 2 baños completos" },
     { id: 3, piso: "3er Piso", areaConstruida: 108.10, descripcion: "6 habitaciones simples + 3 baños completos" },
-    { id: 4, piso: "4to Piso / Terraza", areaConstruida: 64.10, descripcion: "3 habitaciones adicionales + 1 baño completo + amplia terraza con zona de lavandería" },
+    { id: 4, piso: "4to Piso / Terraza", areaConstruida: 61.00, descripcion: "3 habitaciones adicionales + 1 baño completo + amplia terraza con zona de lavandería" },
     { id: 5, piso: "Azotea", areaConstruida: 0, descripcion: "2 tanques elevados (1,000 L c/u) + mirador. Agua las 24 hs." }
   ],
   ultimaActualizacion: "2025-12-01",
@@ -87,7 +87,7 @@ export const initialComparables = [
     id: 7,
     nombre: "Casa de 3 pisos Esquina",
     referencia: "A 1 cuadra de Av. La Cultura, cerca Parque del Niño y Mercado Santa Rosa",
-    precio: 170000,
+    precio: 160000,
     areaTerrenoM2: 120,
     areaConstruidaM2: 247,
     pisos: 3,
