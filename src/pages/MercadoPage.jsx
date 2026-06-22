@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { useData } from '../App';
 import { 
   BarChart, 
@@ -16,7 +16,9 @@ import {
   Info,
   TrendingUp,
   TrendingDown,
-  Minus
+  Minus,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { formatCurrency, formatNumber, calculatePricePerM2 } from '../utils/formatters';
 import styles from './MercadoPage.module.css';
@@ -24,6 +26,43 @@ import styles from './MercadoPage.module.css';
 const MercadoPage = () => {
   const { data } = useData();
   const { comparables, inmueble } = data;
+
+  // Editable price state — initialized from data
+  const [customPrice, setCustomPrice] = useState(inmueble.precioPublicacion);
+
+  // Track which comparables are included in average calculation
+  // By default: all activa ones are included
+  const [includedIds, setIncludedIds] = useState(() => {
+    const ids = new Set();
+    comparables.forEach(c => {
+      if (c.activa) ids.add(c.id);
+    });
+    return ids;
+  });
+
+  const toggleIncluded = useCallback((id) => {
+    setIncludedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }, []);
+
+  const handlePriceChange = (e) => {
+    const val = e.target.value.replace(/[^0-9]/g, '');
+    setCustomPrice(val === '' ? '' : parseInt(val, 10));
+  };
+
+  const nudgePrice = (delta) => {
+    setCustomPrice(prev => {
+      const current = typeof prev === 'number' ? prev : inmueble.precioPublicacion;
+      return Math.max(0, current + delta);
+    });
+  };
 
   const displayNumbers = useMemo(() => {
     let activeCount = 0;
@@ -34,10 +73,12 @@ const MercadoPage = () => {
     });
   }, [comparables]);
 
-  const ownM2Price = calculatePricePerM2(inmueble.precioPublicacion, inmueble.areaConstruidaM2);
+  const effectivePrice = typeof customPrice === 'number' ? customPrice : inmueble.precioPublicacion;
+  const ownM2Price = calculatePricePerM2(effectivePrice, inmueble.areaConstruidaM2);
 
+  // Stats now filter by includedIds
   const stats = useMemo(() => {
-    const activeComps = comparables.filter(c => c.activa);
+    const activeComps = comparables.filter(c => includedIds.has(c.id));
     if (activeComps.length === 0) return null;
 
     const prices = activeComps.map(c => c.precio);
@@ -50,12 +91,12 @@ const MercadoPage = () => {
     const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
     const avgM2 = m2Prices.length > 0 ? m2Prices.reduce((a, b) => a + b, 0) / m2Prices.length : 0;
 
-    return { min, max, avg, avgM2 };
-  }, [comparables]);
+    return { min, max, avg, avgM2, count: activeComps.length };
+  }, [comparables, includedIds]);
 
   const chartData = useMemo(() => {
     const activeComps = comparables
-      .filter(c => c.activa && c.areaConstruidaM2)
+      .filter(c => includedIds.has(c.id) && c.areaConstruidaM2)
       .map(c => ({
         name: c.nombre.length > 16 ? c.nombre.substring(0, 16) + '…' : c.nombre,
         fullName: c.nombre,
@@ -71,18 +112,18 @@ const MercadoPage = () => {
     };
 
     return [...activeComps, ownData].sort((a, b) => a.m2Price - b.m2Price);
-  }, [comparables, inmueble, ownM2Price]);
+  }, [comparables, includedIds, ownM2Price]);
 
-  // Reference data: inactive comparables with m2 data (separate from main chart)
+  // Reference data: comparables NOT in includedIds that have m2 data and are not active
   const refChartData = useMemo(() => {
     return comparables
-      .filter(c => !c.activa && c.areaConstruidaM2)
+      .filter(c => !includedIds.has(c.id) && c.areaConstruidaM2)
       .map(c => ({
         name: c.nombre.length > 20 ? c.nombre.substring(0, 20) + '…' : c.nombre,
         fullName: c.nombre,
         m2Price: Math.round(calculatePricePerM2(c.precio, c.areaConstruidaM2)),
       }));
-  }, [comparables]);
+  }, [comparables, includedIds]);
 
   // Custom label at end of each bar
   const renderBarLabel = (props) => {
@@ -105,14 +146,46 @@ const MercadoPage = () => {
   // Position comparison vs average
   const diffVsAvg = stats ? Math.round(((ownM2Price - stats.avgM2) / stats.avgM2) * 100) : 0;
 
+  const isCustom = effectivePrice !== inmueble.precioPublicacion;
+
   return (
     <div className={styles.page}>
 
-      {/* Hero stat bar */}
+      {/* Hero stat bar with editable price */}
       <div className={styles.heroBar}>
         <div className={styles.heroMain}>
           <span className={styles.heroLabel}>Tu Precio</span>
-          <span className={styles.heroPrice}>{formatCurrency(inmueble.precioPublicacion)}</span>
+          <div className={styles.priceEditor}>
+            <button 
+              className={styles.nudgeBtn} 
+              onClick={() => nudgePrice(-5000)}
+              title="-$5,000"
+            >
+              <ChevronDown size={16} />
+            </button>
+            <div className={styles.priceInputWrap}>
+              <span className={styles.priceCurrency}>$</span>
+              <input 
+                type="text"
+                className={styles.priceInput}
+                value={typeof customPrice === 'number' ? customPrice.toLocaleString('en-US') : ''}
+                onChange={handlePriceChange}
+                inputMode="numeric"
+              />
+            </div>
+            <button 
+              className={styles.nudgeBtn} 
+              onClick={() => nudgePrice(5000)}
+              title="+$5,000"
+            >
+              <ChevronUp size={16} />
+            </button>
+          </div>
+          {isCustom && (
+            <button className={styles.resetPriceBtn} onClick={() => setCustomPrice(inmueble.precioPublicacion)}>
+              Restaurar ${inmueble.precioPublicacion.toLocaleString('en-US')}
+            </button>
+          )}
         </div>
         <div className={styles.heroDivider}></div>
         <div className={styles.heroStat}>
@@ -129,6 +202,13 @@ const MercadoPage = () => {
         </div>
       </div>
 
+      {/* Scenario indicator */}
+      {isCustom && (
+        <div className={styles.scenarioBanner}>
+          ⚡ Escenario: ${effectivePrice.toLocaleString('en-US')} — precio original: ${inmueble.precioPublicacion.toLocaleString('en-US')}
+        </div>
+      )}
+
       {/* Stats Grid */}
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
@@ -139,7 +219,7 @@ const MercadoPage = () => {
         <div className={styles.statCard}>
           <span className={styles.statLabel}>Precio Promedio</span>
           <span className={styles.statVal}>{formatCurrency(stats?.avg)}</span>
-          <span className={styles.statSub}>Mercado activo</span>
+          <span className={styles.statSub}>{stats ? `${stats.count} inmuebles seleccionados` : 'Ninguno seleccionado'}</span>
         </div>
         <div className={styles.statCard}>
           <span className={styles.statLabel}>Precio Máximo</span>
@@ -156,55 +236,61 @@ const MercadoPage = () => {
       {/* Chart */}
       <div className={styles.chartCard}>
         <h3 className={styles.sectionTitle}>Comparativa USD/m² Construido</h3>
-        <div className={styles.chartContainer}>
-          <ResponsiveContainer width="100%" height={Math.max(220, chartData.length * 52 + 50)}>
-            <BarChart data={chartData} layout="vertical" margin={{ left: 5, right: 55, top: 15, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e5e7eb" />
-              <XAxis type="number" hide />
-              <YAxis 
-                dataKey="name" 
-                type="category" 
-                width={120} 
-                tick={{ fontSize: 10, fill: '#6b7280', fontFamily: "'Inter', sans-serif" }} 
-              />
-              <Bar dataKey="m2Price" radius={[0, 5, 5, 0]} barSize={22}>
-                {chartData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.isOwn ? '#c9a84c' : '#1e3a5f'} 
-                    fillOpacity={entry.isOwn ? 1 : 0.75} 
+        {chartData.length > 1 ? (
+          <>
+            <div className={styles.chartContainer}>
+              <ResponsiveContainer width="100%" height={Math.max(220, chartData.length * 52 + 50)}>
+                <BarChart data={chartData} layout="vertical" margin={{ left: 5, right: 55, top: 15, bottom: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e5e7eb" />
+                  <XAxis type="number" hide />
+                  <YAxis 
+                    dataKey="name" 
+                    type="category" 
+                    width={120} 
+                    tick={{ fontSize: 10, fill: '#6b7280', fontFamily: "'Inter', sans-serif" }} 
                   />
-                ))}
-                <LabelList dataKey="m2Price" content={renderBarLabel} />
-              </Bar>
-              <ReferenceLine 
-                x={Math.round(stats?.avgM2 || 0)} 
-                stroke="#ef4444" 
-                strokeWidth={2}
-                strokeDasharray="6 4" 
-                label={{ 
-                  position: 'top', 
-                  value: `Avg $${Math.round(stats?.avgM2 || 0)}`, 
-                  fill: '#ef4444', 
-                  fontSize: 11, 
-                  fontWeight: 700,
-                  fontFamily: "'Inter', sans-serif"
-                }} 
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <div className={styles.chartLegend}>
-          <span className={styles.legendDot} style={{ background: '#1e3a5f' }}></span> Comparables
-          <span className={styles.legendDot} style={{ background: '#c9a84c', marginLeft: 12 }}></span> Mi Inmueble
-          <span className={styles.legendLine}></span> Promedio
-        </div>
+                  <Bar dataKey="m2Price" radius={[0, 5, 5, 0]} barSize={22}>
+                    {chartData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={entry.isOwn ? '#c9a84c' : '#1e3a5f'} 
+                        fillOpacity={entry.isOwn ? 1 : 0.75} 
+                      />
+                    ))}
+                    <LabelList dataKey="m2Price" content={renderBarLabel} />
+                  </Bar>
+                  <ReferenceLine 
+                    x={Math.round(stats?.avgM2 || 0)} 
+                    stroke="#ef4444" 
+                    strokeWidth={2}
+                    strokeDasharray="6 4" 
+                    label={{ 
+                      position: 'top', 
+                      value: `Avg $${Math.round(stats?.avgM2 || 0)}`, 
+                      fill: '#ef4444', 
+                      fontSize: 11, 
+                      fontWeight: 700,
+                      fontFamily: "'Inter', sans-serif"
+                    }} 
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className={styles.chartLegend}>
+              <span className={styles.legendDot} style={{ background: '#1e3a5f' }}></span> Comparables
+              <span className={styles.legendDot} style={{ background: '#c9a84c', marginLeft: 12 }}></span> Mi Inmueble
+              <span className={styles.legendLine}></span> Promedio
+            </div>
+          </>
+        ) : (
+          <div className={styles.emptyChart}>Selecciona al menos un comparable para ver la gráfica</div>
+        )}
 
         {/* Reference properties - separate section */}
         {refChartData.length > 0 && (
           <>
             <div className={styles.refDivider}>
-              <span>Solo referencia — no incluido en promedios</span>
+              <span>Excluidos del promedio</span>
             </div>
             <div className={styles.chartContainer}>
               <ResponsiveContainer width="100%" height={refChartData.length * 52 + 30}>
@@ -220,12 +306,14 @@ const MercadoPage = () => {
                   <Bar dataKey="m2Price" radius={[0, 5, 5, 0]} barSize={20} fill="#9ca3af" fillOpacity={0.5}>
                     <LabelList dataKey="m2Price" content={renderBarLabel} />
                   </Bar>
-                  <ReferenceLine 
-                    x={Math.round(stats?.avgM2 || 0)} 
-                    stroke="#ef4444" 
-                    strokeWidth={1}
-                    strokeDasharray="4 3" 
-                  />
+                  {stats && (
+                    <ReferenceLine 
+                      x={Math.round(stats.avgM2)} 
+                      stroke="#ef4444" 
+                      strokeWidth={1}
+                      strokeDasharray="4 3" 
+                    />
+                  )}
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -238,7 +326,7 @@ const MercadoPage = () => {
         <div className={styles.tableHeader}>
           <h3 className={styles.sectionTitle}>Tabla de Comparables</h3>
           <p className={styles.infoNote}>
-            <Info size={13} /> Actualizado Mayo 2026
+            <Info size={13} /> Usa los casilleros para incluir/excluir del promedio
           </p>
         </div>
 
@@ -248,6 +336,7 @@ const MercadoPage = () => {
             <table>
               <thead>
                 <tr>
+                  <th style={{ width: 40 }}>Incl.</th>
                   <th>#</th>
                   <th>Nombre / Referencia</th>
                   <th>Precio USD</th>
@@ -260,12 +349,16 @@ const MercadoPage = () => {
               <tbody>
                 {/* Mi Inmueble */}
                 <tr className={styles.rowOwn}>
+                  <td></td>
                   <td>★</td>
                   <td>
                     <div className={styles.compName}>Mi Inmueble</div>
                     <div className={styles.compRef}>{inmueble.direccion}</div>
                   </td>
-                  <td className={styles.bold}>{formatCurrency(inmueble.precioPublicacion)}</td>
+                  <td className={styles.bold}>
+                    {formatCurrency(effectivePrice)}
+                    {isCustom && <span className={styles.scenarioTag}>escenario</span>}
+                  </td>
                   <td>{formatNumber(inmueble.areaTerrenoM2)}</td>
                   <td>{formatNumber(inmueble.areaConstruidaM2)}</td>
                   <td className={styles.bold}>{formatCurrency(ownM2Price)}</td>
@@ -274,10 +367,21 @@ const MercadoPage = () => {
                 {/* Comparables */}
                 {comparables.map((comp, idx) => {
                   const m2Price = comp.areaConstruidaM2 ? calculatePricePerM2(comp.precio, comp.areaConstruidaM2) : null;
-                  const isInactive = !comp.activa;
+                  const isIncluded = includedIds.has(comp.id);
                   
                   return (
-                    <tr key={comp.id} className={isInactive ? styles.rowInactive : ''}>
+                    <tr key={comp.id} className={!isIncluded ? styles.rowInactive : ''}>
+                      <td>
+                        <label className={styles.checkboxWrap}>
+                          <input 
+                            type="checkbox" 
+                            checked={isIncluded} 
+                            onChange={() => toggleIncluded(comp.id)}
+                            className={styles.checkbox}
+                          />
+                          <span className={styles.checkboxCustom}></span>
+                        </label>
+                      </td>
                       <td>{displayNumbers[idx]}</td>
                       <td>
                         <div className={styles.compName}>
@@ -324,7 +428,10 @@ const MercadoPage = () => {
             <div className={styles.cardGrid}>
               <div className={styles.cardMetric}>
                 <span className={styles.metricLabel}>Precio</span>
-                <span className={styles.metricVal}>{formatCurrency(inmueble.precioPublicacion)}</span>
+                <span className={styles.metricVal}>
+                  {formatCurrency(effectivePrice)}
+                  {isCustom && <span className={styles.scenarioTag}>escenario</span>}
+                </span>
               </div>
               <div className={styles.cardMetric}>
                 <span className={styles.metricLabel}>Terreno</span>
@@ -344,12 +451,21 @@ const MercadoPage = () => {
           {/* Comparable cards */}
           {comparables.map((comp, idx) => {
             const m2Price = comp.areaConstruidaM2 ? calculatePricePerM2(comp.precio, comp.areaConstruidaM2) : null;
-            const isInactive = !comp.activa;
+            const isIncluded = includedIds.has(comp.id);
             
             return (
-              <div key={comp.id} className={`${styles.card} ${isInactive ? styles.cardDim : ''}`}>
+              <div key={comp.id} className={`${styles.card} ${!isIncluded ? styles.cardDim : ''}`}>
                 <div className={styles.cardTop}>
-                  <div className={`${styles.cardBadge} ${isInactive ? styles.cardBadgeInactive : ''}`}>{displayNumbers[idx]}</div>
+                  <label className={styles.checkboxWrap} onClick={(e) => e.stopPropagation()}>
+                    <input 
+                      type="checkbox" 
+                      checked={isIncluded} 
+                      onChange={() => toggleIncluded(comp.id)}
+                      className={styles.checkbox}
+                    />
+                    <span className={styles.checkboxCustom}></span>
+                  </label>
+                  <div className={`${styles.cardBadge} ${!isIncluded ? styles.cardBadgeInactive : ''}`}>{displayNumbers[idx]}</div>
                   <div className={styles.cardInfo}>
                     <span className={styles.cardName}>{comp.nombre}</span>
                     {comp.estado && <span className={styles.badge}>{comp.estado}</span>}

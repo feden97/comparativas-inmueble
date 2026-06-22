@@ -1,4 +1,4 @@
-export const DATA_VERSION = 11;
+export const DATA_VERSION = 13;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -12,7 +12,7 @@ export const initialInmuebleData = {
   habitaciones: 16,
   banios: 8,
   localComercialM2: 75,
-  precioPublicacion: 220000,
+  precioPublicacion: 210000,
   precioNotaAclaratoria: "En revisión según nuevas publicaciones del mercado (análisis: Dic 2025)",
   estadoVenta: "Activo",
   descripcionGeneral: "Inmueble de 4 pisos con estructura antisísmica y planos de arquitectura e ingeniería. Ideal para hotel, clínica, oficinas, academia o renta. Trato directo con propietario, sin comisiones inmobiliarias. Documentación en regla, inscrito en SUNARP, único dueño.",
@@ -148,7 +148,8 @@ export const initialComparables = [
     id: 9,
     nombre: "Casa a 1/2 cuadra Av. Simon Bolivar",
     referencia: "Cerca colegio Pallardelli y mercado Santa Rosa",
-    precio: 135000,
+    precio: 127000,
+    precioAnterior: 135000,
     areaTerrenoM2: 140,
     areaConstruidaM2: 312,
     pisos: 3,
