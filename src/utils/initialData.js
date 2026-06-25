@@ -1,4 +1,4 @@
-export const DATA_VERSION = 13;
+export const DATA_VERSION = 14;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -87,7 +87,8 @@ export const initialComparables = [
     id: 7,
     nombre: "Casa de 3 pisos Esquina",
     referencia: "A 1 cuadra de Av. La Cultura, cerca Parque del Niño y Mercado Santa Rosa",
-    precio: 160000,
+    precio: 155000,
+    precioAnterior: 160000,
     areaTerrenoM2: 120,
     areaConstruidaM2: 247,
     pisos: 3,
@@ -209,6 +210,26 @@ export const initialComparables = [
     activa: false,
     estado: "Referencia",
     notas: "Solo referencia, sin precio por m2 por falta de área construida exacta"
+  },
+  {
+    id: 12,
+    nombre: "Casa de 1er piso Esquina (Century 21)",
+    referencia: "A 2 cuadras de Av. La Cultura, cerca a colegio Gerardo Arias Copaja y Plaza Las Buganvillas",
+    precio: 75000,
+    areaTerrenoM2: 120,
+    areaConstruidaM2: 85,
+    pisos: 1,
+    habitaciones: 2,
+    banios: 1,
+    medioBanio: 0,
+    cocheras: 1,
+    descripcion: "Casa de 1er piso en esquina. Amplia sala comedor, cocina, 2 dormitorios, 1 baño completo, cochera con patio y área de lavandería. Título inscrito en SUNARP, libre de cargas y gravamen.",
+    usoIdeal: "Vivienda familiar",
+    fuente: "Properati",
+    link: "https://www.properati.com.pe/detalle/14032-32-faf2-970da16277dc-19efc94-a111-7096",
+    coordenadas: { lat: -18.0528925, lng: -70.2596183 },
+    fechaPublicacion: "2026-06-25",
+    activa: true
   }
 ];
 
