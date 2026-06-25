@@ -1,4 +1,4 @@
-export const DATA_VERSION = 14;
+export const DATA_VERSION = 15;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -217,7 +217,7 @@ export const initialComparables = [
     referencia: "A 2 cuadras de Av. La Cultura, cerca a colegio Gerardo Arias Copaja y Plaza Las Buganvillas",
     precio: 75000,
     areaTerrenoM2: 120,
-    areaConstruidaM2: 85,
+    areaConstruidaM2: 120,
     pisos: 1,
     habitaciones: 2,
     banios: 1,
