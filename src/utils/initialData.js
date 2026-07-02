@@ -1,4 +1,4 @@
-export const DATA_VERSION = 15;
+export const DATA_VERSION = 17;
 
 export const initialInmuebleData = {
   direccion: "Asoc. Jose Carlos Mariategui Mz 37 Lote 24",
@@ -12,7 +12,7 @@ export const initialInmuebleData = {
   habitaciones: 16,
   banios: 8,
   localComercialM2: 75,
-  precioPublicacion: 210000,
+  precioPublicacion: 195000,
   precioNotaAclaratoria: "En revisión según nuevas publicaciones del mercado (análisis: Dic 2025)",
   estadoVenta: "Activo",
   descripcionGeneral: "Inmueble de 4 pisos con estructura antisísmica y planos de arquitectura e ingeniería. Ideal para hotel, clínica, oficinas, academia o renta. Trato directo con propietario, sin comisiones inmobiliarias. Documentación en regla, inscrito en SUNARP, único dueño.",
@@ -145,27 +145,6 @@ export const initialComparables = [
     fechaPublicacion: "2026-05-01",
     activa: true
   },
-  {
-    id: 9,
-    nombre: "Casa a 1/2 cuadra Av. Simon Bolivar",
-    referencia: "Cerca colegio Pallardelli y mercado Santa Rosa",
-    precio: 127000,
-    precioAnterior: 135000,
-    areaTerrenoM2: 140,
-    areaConstruidaM2: 312,
-    pisos: 3,
-    habitaciones: 5,
-    banios: 3,
-    medioBanio: 0,
-    cocheras: 1,
-    descripcion: "Construcción de 3 pisos, 2 cocinas, cochera amplia, 2 lavanderías, azotea/terraza.",
-    usoIdeal: "Vivienda familiar",
-    fuente: "Properati",
-    link: "https://www.properati.com.pe/detalle/14032-32-8c6-869166d66f95-19df4ff-b06c-7478",
-    coordenadas: { lat: -18.048343, lng: -70.2517848 },
-    fechaPublicacion: "2026-05-12",
-    activa: true
-  },
   // === REFERENCIAS (sin coordenadas, excluidas del mapa y promedios) ===
   {
     id: 10,
@@ -214,7 +193,7 @@ export const initialComparables = [
   {
     id: 12,
     nombre: "Casa de 1er piso Esquina (Century 21)",
-    referencia: "A 2 cuadras de Av. La Cultura, cerca a colegio Gerardo Arias Copaja y Plaza Las Buganvillas",
+    referencia: "A 2 cuadras de Av. La Cultura, cerca a colegio Gerardo Arias Copaja y Plaza Las Buganvillas. (Nota: Se asume que el área construida es de 120m² por ser de 1 solo piso)",
     precio: 75000,
     areaTerrenoM2: 120,
     areaConstruidaM2: 120,
@@ -223,7 +202,7 @@ export const initialComparables = [
     banios: 1,
     medioBanio: 0,
     cocheras: 1,
-    descripcion: "Casa de 1er piso en esquina. Amplia sala comedor, cocina, 2 dormitorios, 1 baño completo, cochera con patio y área de lavandería. Título inscrito en SUNARP, libre de cargas y gravamen.",
+    descripcion: "Casa de 1er piso en esquina. Amplia sala comedor, cocina, 2 dormitorios, 1 baño completo, cochera con patio y área de lavandería. Título inscrito en SUNARP, libre de cargas y gravamen. (Nota: Se asume que el área construida es de 120m² por ser de 1 solo piso)",
     usoIdeal: "Vivienda familiar",
     fuente: "Properati",
     link: "https://www.properati.com.pe/detalle/14032-32-faf2-970da16277dc-19efc94-a111-7096",
